@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1> El chat de la mazmorra!</h1>
+<ul id="users"></ul>
+<h3>Usuario: </h3><input id="myUser" value="{{ user }}" disabled>
+<dl id="messages"></dl>
+<input type="text" id="myMessage">
+<button type="button" id="send">Enviar</button>
+<script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"
+    charset="utf-8"></script>
+    <script>
+        const socket = io();
+        socket.on('message', function (msg) {
+        $('#messages').append('<dd>  '+ msg +'</dd>')
+        })
+        $('#send').on('click', function () {
+        socket.send($('#myUser').val());
+        $('#myUser').val('{{ user }}');
+        socket.send($('#myMessage').val());
+        $('#myMessage').val('');
+        });
+
+    </script>
+
+
+</body>
+</html>
